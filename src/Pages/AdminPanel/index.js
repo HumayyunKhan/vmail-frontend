@@ -22,8 +22,8 @@ const AdminPanel = () => {
     const [isUpdate, setIsUpdate] = useState(false);
     const [updateId, setUpdateId] = useState(Number);
      // const url='localhost:3000'
-//   const url='wargencymedia.com'
-const url='185.215.165.189'
+  const url='wargencymedia.com'
+// const url='185.215.165.189'
 
 
 
@@ -36,7 +36,7 @@ const url='185.215.165.189'
 
     const fetchAccounts = async () => {
         try {
-            const response = await fetch(`http://${url}/admin/getAccounts`, {
+            const response = await fetch(`https://${url}/admin/getAccounts`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -101,7 +101,7 @@ const url='185.215.165.189'
         }
 
         try {
-            const response = await fetch(`http://${url}/admin/registerAccount`, {
+            const response = await fetch(`https://${url}/admin/registerAccount`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -142,7 +142,7 @@ const url='185.215.165.189'
     const handleDelete = async (id) => {
         console.log("Account id: " + id)
         try {
-            const response = await fetch(`http://${url}/admin/deleteAccount/${id}`, {
+            const response = await fetch(`https://${url}/admin/deleteAccount/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -172,7 +172,7 @@ const url='185.215.165.189'
         }
 
         try {
-            const response = await fetch(`http://${url}/admin/updateAccount/${id}`, {
+            const response = await fetch(`https://${url}/admin/updateAccount/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
