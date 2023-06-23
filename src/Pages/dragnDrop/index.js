@@ -28,6 +28,7 @@ const FileHandler = () => {
   const navigate = useNavigate();
   // const url='localhost:3000'
   const url='185.215.165.189'
+  // const url='wargencymedia.com'
 
   const [limit, setLimit] = useState(null);
 
@@ -39,7 +40,7 @@ const FileHandler = () => {
 
   const fetchDailyLimit = async () => {
     try {
-      const response = await fetch(`http://${url}/validate/dailyLimit`);
+      const response = await fetch(`https://${url}/validate/dailyLimit`);
 
       if (response.ok) {
         const data = await response.json();
@@ -64,7 +65,7 @@ const FileHandler = () => {
 
   const statusCheck = async (batchId) => {
     try {
-      const response = await fetch(`http://${url}/validate/checkStatus`, {
+      const response = await fetch(`https://${url}/validate/checkStatus`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +94,7 @@ const FileHandler = () => {
 
   const getDiscardedEmails = async (batchId) => {
     try {
-      const response = await fetch(`http://${url}/validate/getDiscardedMails`, {
+      const response = await fetch(`https://${url}/validate/getDiscardedMails`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +131,7 @@ const FileHandler = () => {
     }
 
     try {
-      const response = await fetch(`http://${url}/validate/result`, {
+      const response = await fetch(`https://${url}/validate/result`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ const FileHandler = () => {
 
   const downloadResult = async (batchId) => {
     try {
-      const response = await fetch(`http://${url}/validate/downloadBatch?batchId=${batchId}`); // Replace with your API endpoint URL
+      const response = await fetch(`https://${url}/validate/downloadBatch?batchId=${batchId}`); // Replace with your API endpoint URL
 
       if (response.ok) {
         const blob = await response.blob();
@@ -198,7 +199,7 @@ const FileHandler = () => {
     formData.append('file', csvFile);
 
     try {
-      const response = await fetch(`http://${url}/validate/bulkValidate`, {
+      const response = await fetch(`https://${url}/validate/bulkValidate`, {
         method: 'POST',
         body: formData,
       });
@@ -222,7 +223,7 @@ const FileHandler = () => {
   };
 
   const getAllBatchIds = async () => {
-    fetch(`http://${url}/validate/getBatches`)
+    fetch(`https://${url}/validate/getBatches`)
       .then(response => response.json())
       .then(json => {
         // Process the data received from the API
