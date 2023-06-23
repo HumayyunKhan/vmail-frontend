@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 const FileHandler = () => {
+  const [resultLimit, setResultLimit] = useState(10);
+  const [lowerresult, setlowerResult] = useState(0);
 
   const [consoleText, setConsoleText] = useState('');
 
@@ -40,7 +42,7 @@ const FileHandler = () => {
 
   const fetchDailyLimit = async () => {
     try {
-      const response = await fetch(`https://${url}/validate/dailyLimit`);
+      const response = await fetch(`http://${url}/validate/dailyLimit`);
 
       if (response.ok) {
         const data = await response.json();
@@ -65,7 +67,7 @@ const FileHandler = () => {
 
   const statusCheck = async (batchId) => {
     try {
-      const response = await fetch(`https://${url}/validate/checkStatus`, {
+      const response = await fetch(`http://${url}/validate/checkStatus`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +96,7 @@ const FileHandler = () => {
 
   const getDiscardedEmails = async (batchId) => {
     try {
-      const response = await fetch(`https://${url}/validate/getDiscardedMails`, {
+      const response = await fetch(`http://${url}/validate/getDiscardedMails`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +133,7 @@ const FileHandler = () => {
     }
 
     try {
-      const response = await fetch(`https://${url}/validate/result`, {
+      const response = await fetch(`http://${url}/validate/result`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -166,7 +168,7 @@ const FileHandler = () => {
 
   const downloadResult = async (batchId) => {
     try {
-      const response = await fetch(`https://${url}/validate/downloadBatch?batchId=${batchId}`); // Replace with your API endpoint URL
+      const response = await fetch(`http://${url}/validate/downloadBatch?batchId=${batchId}`); // Replace with your API endpoint URL
 
       if (response.ok) {
         const blob = await response.blob();
@@ -199,7 +201,7 @@ const FileHandler = () => {
     formData.append('file', csvFile);
 
     try {
-      const response = await fetch(`https://${url}/validate/bulkValidate`, {
+      const response = await fetch(`http://${url}/validate/bulkValidate`, {
         method: 'POST',
         body: formData,
       });
@@ -223,11 +225,11 @@ const FileHandler = () => {
   };
 
   const getAllBatchIds = async () => {
-    fetch(`https://${url}/validate/getBatches`)
+    fetch(`http://${url}/validate/getBatches`)
       .then(response => response.json())
       .then(json => {
         // Process the data received from the API
-        setAllBatchIDs(json.data)
+        setAllBatchIDs((json.data).reverse())
         console.log(json);
       })
       .catch(error => {
@@ -366,9 +368,9 @@ const FileHandler = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {allBatchIDs.map((batchId, index) => (
+                    {allBatchIDs.slice(lowerresult, resultLimit).map((batchId, index) => (
                       <tr key={index}>
-                        <td>{index + 1}</td>
+                        <td>{lowerresult + index}</td>
                         <td>{batchId.batchId}</td>
                         <td className={batchId.status === 'PENDING' ? 'pending' : 'finalized'}>{batchId.status}</td>
                         <td className={batchId.status === 'PENDING' ? 'pending' : 'finalized'}>{batchId.deliverableAt}</td>
@@ -380,6 +382,20 @@ const FileHandler = () => {
                     ))}
                   </tbody>
                 </table>
+                <button
+    className="show-more-button"
+    onClick={() => {setResultLimit(resultLimit - 10)
+    setlowerResult(lowerresult-10)}}
+  >
+    <p>{"<<"}</p>
+  </button>
+                <button
+    className="show-more-button"
+    onClick={() => {setResultLimit(resultLimit + 10)
+    setlowerResult(lowerresult+10)}}
+  >
+     <p>{">>"}</p>
+  </button>
               </div>
             ) : null
         }
