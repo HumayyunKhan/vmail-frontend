@@ -30,7 +30,7 @@ const FileHandler = () => {
   const navigate = useNavigate();
   // const url='localhost:3000'
   // const url='185.215.165.189'
-  const url='wargencymedia.com'
+  const url='admin.wargencymedia.com'
 
   const [limit, setLimit] = useState(null);
 

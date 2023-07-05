@@ -22,7 +22,7 @@ const AdminPanel = () => {
     const [isUpdate, setIsUpdate] = useState(false);
     const [updateId, setUpdateId] = useState(Number);
      // const url='localhost:3000'
-  const url='wargencymedia.com'
+  const url='admin.wargencymedia.com'
 // const url='185.215.165.189'
 
 
