@@ -10,6 +10,8 @@ import EmailsResult from '../../Components/EmailsResult';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import { faCirclePlus, faHouse, faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
+
 
 
 const FileHandler = () => {
@@ -28,7 +30,7 @@ const FileHandler = () => {
   const [currentTab, setCurrentTab] = useState(0);
 
   const navigate = useNavigate();
-  // const url='localhost:3000'
+  // const url='localhost:4000'
   // const url='185.215.165.189'
   const url='admin.wargencymedia.com'
 
@@ -240,6 +242,31 @@ const FileHandler = () => {
 
   }
 
+  const handleDelete = async (batchId) => {
+    console.log("Account id: " + batchId)
+    try {
+        const response = await fetch(`https://${url}/validate/deleteBatch?batchId=${batchId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            console.log('batch deleted successfully');
+            alert("Record Deleted Succesfully");
+            getAllBatchIds();
+        } else {
+            console.log('batch deletion failed');
+            alert("Record Deletion Failed")
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        alert('An error occurred:', error)
+    }
+}
+
+
   const tabs = [
     { title: 'Validate Bulk Emails', content: <BulkEmail validateEmails={validateEmails} limit={limit}></BulkEmail> },
     {
@@ -374,10 +401,14 @@ const FileHandler = () => {
                         <td>{batchId.batchId}</td>
                         <td className={batchId.status === 'PENDING' ? 'pending' : 'finalized'}>{batchId.status}</td>
                         <td className={batchId.status === 'PENDING' ? 'pending' : 'finalized'}>{batchId.deliverableAt}</td>
-                        <td><button className='btn result-btn' disabled={batchId.status === 'PENDING' ? true : false} onClick={() => downloadResult(batchId.batchId)}>Download</button></td>
+                        <td><button className='btn result-btn'  onClick={() => downloadResult(batchId.batchId)}>Download</button>
+                        <button className='btn delete-button' onClick={() => handleDelete(batchId.batchId)}>
+                                                    <FontAwesomeIcon icon={faTrash} style={{ color: "#ffffff", }} /> Delete
+                                                </button></td>
                         {/* <td>{email.isValid ? 'Yes' : 'No'}</td> */}
                         {/* <td>{email.isDomainAvailable ? 'Yes' : 'No'}</td> */}
                         {/* <td>{email.isActive ? 'Yes' : 'No'}</td> */}
+                   
                       </tr>
                     ))}
                   </tbody>
