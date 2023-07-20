@@ -36,7 +36,8 @@ const AdminPanel = () => {
 
     const fetchAccounts = async () => {
         try {
-            const response = await fetch(`https://${url}/admin/getAccounts`, {
+            const response = await fetch(`http://localhost:4000/admin/getAccounts`, {
+            // const response = await fetch(`https://${url}/admin/getAccounts`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -261,7 +262,7 @@ const AdminPanel = () => {
                                 <div className='header'>
                                     <p style={{ width: '37%' }}>Emails</p>
                                     <p style={{ width: '10.2%' }}>Port</p>
-                                    <p style={{ width: '26.7%' }}>Created At</p>
+                                    <p style={{ width: '26.7%' }}>Active</p>
                                     <p style={{ width: '21%' }}>Updated At</p>
                                 </div>
                             </div>
@@ -273,7 +274,7 @@ const AdminPanel = () => {
                                             <div className='account' key={account.id}>
                                                 <p style={{ width: '30%' }}>{account.email}</p>
                                                 <p style={{ width: '7%' }}>{account.port}</p>
-                                                <p style={{ width: '21%' }}>{account.createdAt}</p>
+                                                <p style={{ width: '21%' }}>{account.active?"true":"false"}</p>
                                                 <p style={{ width: '21%' }}>{account.updatedAt}</p>
                                                 <button className='btn update-button' onClick={() => openUpdateModal(account.id , account.email)}>
                                                     <FontAwesomeIcon icon={faPen} style={{ color: "#363636", }} /> Edit
