@@ -36,8 +36,8 @@ const AdminPanel = () => {
 
     const fetchAccounts = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/admin/getAccounts`, {
-            // const response = await fetch(`https://${url}/admin/getAccounts`, {
+            // const response = await fetch(`http://localhost:4000/admin/getAccounts`, {
+            const response = await fetch(`https://${url}/admin/getAccounts`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
